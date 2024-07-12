@@ -9,9 +9,15 @@ class EstudianteController extends Controller
 {
     public function create()
     {
-        return view('estudiantes.ingreso');
+        return view('ingreso');
     }
 
+    public function mostrarListado()
+    {
+    $estudiantes = Estudiante::all(); // Asegúrate de que tienes el modelo Estudiante
+    return view('listado', compact('estudiantes'));
+    }
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -34,5 +40,10 @@ class EstudianteController extends Controller
         ]);
 
         return redirect()->route('estudiantes.create')->with('success', 'Estudiante guardado con éxito.');
+    }
+    public function show($id)
+    {
+        $estudiante = Estudiante::findOrFail($id);
+        return view('show', compact('estudiante'));
     }
 }
